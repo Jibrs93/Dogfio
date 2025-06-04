@@ -35,6 +35,10 @@ Aplicación iOS desarrollada como parte de un challenge técnico. Muestra una li
 
 ---
 
+## 🧪 Pruebas Unitarias ✅
+
+---
+
 ## 📦 Persistencia
 
 - La primera vez que se abre la app, se hace una petición `GET` para obtener la lista de perros.
@@ -55,4 +59,4 @@ Aplicación iOS desarrollada como parte de un challenge técnico. Muestra una li
 
 ## ✍️ Autor:
 
-**Jonathan López**  
+**Jonathan L.**  
