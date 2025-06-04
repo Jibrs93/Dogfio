@@ -48,8 +48,10 @@ final class DogListViewModel {
         if query.isEmpty {
             filteredDogs = allDogs
         } else {
+            let lowercasedQuery = query.lowercased()
             filteredDogs = allDogs.filter {
-                $0.dogName?.lowercased().contains(query.lowercased()) ?? false
+                guard let name = $0.dogName else { return false }
+                return name.lowercased().contains(lowercasedQuery)
             }
         }
         onDataChanged?()
