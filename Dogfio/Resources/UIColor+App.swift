@@ -12,6 +12,7 @@ extension UIColor {
     static let appBackground = UIColor(hex: "#F8F8F8")
     static let textPrimary = UIColor(hex: "#333333")
     static let textSecondary = UIColor(hex: "#666666")
+    static let konfioColor = UIColor(hex: "#7D28DB") // Brand
     
     convenience init(hex: String) {
         var hex = hex.trimmingCharacters(in: .whitespacesAndNewlines).uppercased()

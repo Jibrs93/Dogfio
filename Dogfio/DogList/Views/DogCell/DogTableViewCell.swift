@@ -59,7 +59,7 @@ final class DogTableViewCell: UITableViewCell {
         let button = UIButton()
         let config = UIImage.SymbolConfiguration(pointSize: 18, weight: .medium)
         button.setImage(UIImage(systemName: "arrow.right", withConfiguration: config), for: .normal)
-        button.tintColor = .lightGray
+        button.tintColor = .konfioColor
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
