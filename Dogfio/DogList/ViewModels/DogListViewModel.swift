@@ -7,17 +7,19 @@
 
 import Foundation
 
-final class DogListViewModel {
+final class DogListViewModel: DogListViewModelProtocol {
     private var allDogs: [DogInfoResponse] = []
     private var filteredDogs: [DogInfoResponse] = []
 
     var onDataChanged: (() -> Void)?
+    var onError: ((String) -> Void)?  // Nuevo callback para errores
 
     // MARK: Setup DataDog & CoreData
     func loadDogs() {
         if UserDefaults.standard.bool(forKey: "hasLoadedDogs") {
             loadDogsFromLocal()
             //UserDefaults.standard.set(false, forKey: "hasLoadedDogs") //change to false fo chack if call a service
+
         } else {
             DogService.shared.fetchDogs { [weak self] result in
                 DispatchQueue.main.async {
@@ -30,6 +32,7 @@ final class DogListViewModel {
                         UserDefaults.standard.set(true, forKey: "hasLoadedDogs")
                     case .failure(let error):
                         print("Error:", error)
+                        self?.onError?("No se pudo cargar la información. Intenta nuevamente.")
                     }
                 }
             }

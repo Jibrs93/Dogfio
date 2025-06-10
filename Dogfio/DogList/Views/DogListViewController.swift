@@ -7,8 +7,28 @@
 
 import UIKit
 
+protocol DogListViewModelProtocol {
+    var count: Int { get }
+    var onDataChanged: (() -> Void)? { get set }
+    var onError: ((String) -> Void)? { get set }   // 👈 Nuevo callback para errores
+    
+    func loadDogs()
+    func dog(index: Int) -> DogInfoResponse
+    func filterDogs(query: String)
+}
+
 final class DogListViewController: UIViewController {
-    private let viewModel = DogListViewModel()
+    
+    private var viewModel: DogListViewModelProtocol
+    
+    init(viewModel: DogListViewModelProtocol = DogListViewModel()) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     private let titleLabel: UILabel = {
         let label = UILabel()
@@ -96,6 +116,17 @@ final class DogListViewController: UIViewController {
             self.emptyStateLabel.isHidden = self.viewModel.count > 0
             self.tableView.reloadData()
         }
+        
+        viewModel.onError = { [weak self] message in
+            guard let self = self else { return }
+            self.showErrorAlert(message: message)
+        }
+    }
+    
+    private func showErrorAlert(message: String) {
+        let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        present(alert, animated: true)
     }
     
     @objc private func refreshDogs() {
